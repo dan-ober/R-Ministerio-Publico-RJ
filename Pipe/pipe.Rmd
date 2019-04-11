@@ -1,0 +1,85 @@
+---
+title: "Pipe em R"
+author: Daniel Fontana Oberling
+data: 11/04/2019
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+library(stringr)
+```
+
+```{r}
+
+df<-tibble(nome=c("ober","daniel","roberto"),
+           idade=c(30, 40, 50),
+           altura=c(1.80,1.66,2.00),
+           peso=c(70,80,90))
+
+```
+
+Adiciona indice de Massa Corporal
+
+```{r}
+df %>% 
+  mutate(bmi=round(peso/altura^2,2)) %>% 
+  mutate(imc=bmi %>% 
+            as.character %>% 
+            str_replace("\\.",",")) %>% 
+  select(-bmi)
+
+```
+
+
+
+
+```{r}
+nrow(df)
+ncol(df)
+
+
+```
+
+Verbos do Dplyr
+
+```{r}
+colnames(df)
+```
+
+```{r}
+df2<- rename(df, estatura = altura)
+```
+
+Pipe
+
+```{r}
+df3 <- df %>%
+    rename(estatura=altura) %>%
+    select(nome,estatura) 
+df3
+```
+
+```{r}
+df %>% 
+  select(-nome,-altura)
+
+```
+
+```{r}
+df4 <- df %>%
+    rename(estatura=altura) %>%
+    select(nome,estatura) %>% 
+    arrange(desc(nome)) %>% 
+    filter(estatura>=1.80)
+
+df4
+
+```
+
+```{r}
+
+```
+
+
+
